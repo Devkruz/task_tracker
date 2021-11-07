@@ -38,6 +38,24 @@ function App() {
    ]
 );
 
+
+
+const [showAddTask, setShowAddTask] = useState(false);
+// Add task show logic
+const toggleShowAddTask = () => {
+     setShowAddTask(!showAddTask);
+
+}
+
+  //Task adding logic
+  const addTask = (task) => {
+        const id = Math.floor(Math.random() * 100) + 1;
+        const newTask = {...task, id}
+        setTasks([...tasks, newTask])
+  }
+
+  
+
   // Task deleting logic
   const deleteTask =  (id) => {
 
@@ -63,8 +81,8 @@ function App() {
     <div className="main_wrapper wrapper">
 
        <div className = "main">
-        <Header index = {1} ></Header>
-        <AddTask></AddTask>
+        <Header index = {1} showAddTask = {showAddTask} toggleShowAddTask = {toggleShowAddTask}></Header>
+       {showAddTask && <AddTask onAdd = {addTask}></AddTask>}
         {tasks.length > 0 ? (<Tasks tasks = {tasks} deleteTask = {deleteTask} toggleReminder = {toggleReminder}> </Tasks>) : (<h4 style = {{color:"red"}}>No Task to show</h4> )} 
        
        </div>

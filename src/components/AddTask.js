@@ -1,11 +1,21 @@
 import {useState} from 'react';
 
 
-function AddTask() {
+function AddTask({onAdd}) {
      const [text, setText] = useState('');
      const [start, setStart] = useState('');
      const [finish, setFinish] = useState('');
      const [done, setDone] = useState(false);
+
+     const submitTask = () => {
+        if(!text){
+            alert("Pls add a task");
+            return
+      }
+      else{
+          onAdd({text, start, finish, done})
+       }
+     }
 
     return (
         <form className = "add-task-form">
@@ -45,12 +55,22 @@ function AddTask() {
                 <br/>
                 Done ?
                 <input className = "reminder-input" type = "checkbox" 
-                value = {done}  onChange = {(e) => {
-                    setDone(e.currentTarget.checked); console.log(e.currentTarget.checke)}}
+                value = {done} 
+                checked = {done}
+                onChange = {(e) => {
+                setDone(e.currentTarget.checked); console.log(e.currentTarget.checked)}}
                 />
             </label>
 
-            <input className = "save-btn" type="submit" value="Save Task" />
+            <input className = "save-btn" type="submit" value="Save Task" onClick = {(e) => {
+                       e.preventDefault();
+                        submitTask();
+                        setFinish("");
+                        setStart("");
+                        setDone(false);
+                        setText("")
+                        
+            }} />
         </form>
     )
 }
